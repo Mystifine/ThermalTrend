@@ -233,9 +233,14 @@ export default function ModernDashboard() {
                       </span>
                       <h3 className="font-bold text-gray-100 text-sm">
                         {item.theme}
-                        {isTop && (
+                        {isTop && !isMarketTheme(item.theme) &&  (
                           <span className="ml-2 px-1.5 py-0.5 rounded text-[9px] bg-orange-500/20 text-orange-400 uppercase tracking-widest">
                             Hot
+                          </span>
+                        )}
+                        {isMarketTheme(item.theme) && (
+                          <span className="ml-2 px-1.5 py-0.5 rounded text-[9px] bg-blue-500/20 text-blue-400 uppercase tracking-widest border border-blue-500/30">
+                            Benchmark
                           </span>
                         )}
                       </h3>
