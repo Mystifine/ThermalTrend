@@ -1,11 +1,16 @@
 import os;
 from supabase import create_client;
-from dotenv import load_dotenv;
 
-load_dotenv();
+# This is to avoid the error if deployed as action from github
+try:
+  from dotenv import load_dotenv;
+  load_dotenv();
+except ImportError:
+  pass
 
-supabase_url = os.getenv("SUPABASE_URL");
-supabase_key = os.getenv("SUPABASE_KEY");
+# load_dotenv and github will both popular environ.get so it doesn't matter here
+supabase_url = os.environ.get("SUPABASE_URL");
+supabase_key = os.environ.get("SUPABASE_KEY");
 supabase = create_client(supabase_url,supabase_key);
 
 def pushToDB(data):
