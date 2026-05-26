@@ -168,9 +168,8 @@ Pull requests are welcome! If you’d like to add a new theme or improve the hea
 
 ## 📄 License
 
-MIT © [Your Name]
+MIT © Mystifine
 
 ---
 
-Built with ❤️‍🔥 by [Your Name]  
 Data powered by Yahoo Finance (via `yfinance`) – use responsibly.
