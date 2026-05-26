@@ -1,6 +1,6 @@
 import pandas as pd;
 import numpy as np;
-from datetime import datetime, timedelta;
+from datetime import datetime, timedelta, timezone;
 from typing import Dict, List, Optional;
 import yfinance as yf;
 
@@ -99,7 +99,8 @@ class ThemeHeatScoreCalculator:
       'breadth_%': breadth,
       'near_highs_%': nearHighs,
       'consolidation_score': consolAvg,
-      'stocks_analyzed': analyzedStocks
+      'stocks_analyzed': analyzedStocks,
+      "last_updated": datetime.now(timezone.utc).isoformat()
     }
   
   def getHotThemes(self):
