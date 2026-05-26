@@ -60,7 +60,7 @@ thermatrend/
 │   │   └── supabaseClient.ts
 │   └── ...
 ├── backend/                 # Python heat‑score engine
-│   ├── heat_calculator.py   # main script
+│   ├── CalculateHeat.py   # main script
 │   └── requirements.txt
 └── .github/
     └── workflows/
@@ -73,7 +73,7 @@ thermatrend/
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/thermatrend.git
+git clone https://github.com/mystifine/thermatrend.git
 cd thermatrend
 ```
 
@@ -96,11 +96,11 @@ pip install -r requirements.txt
 Create a `.env` file in `backend/` with:
 ```
 SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_KEY=your-service-role-key
+SUPABASE_KEY=your-service-role-key
 ```
 Then run:
 ```bash
-python heat_calculator.py
+python CalculateHeat.py
 ```
 This will recalculate all themes and push the results to your Supabase table.
 
@@ -145,7 +145,7 @@ This will recalculate all themes and push the results to your Supabase table.
 - Add environment variables `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 
 ### Backend (GitHub Actions)
-- Add repository secrets (`SUPABASE_URL`, `SUPABASE_SERVICE_KEY`) under **Settings → Secrets and variables → Actions**.
+- Add repository secrets (`SUPABASE_URL`, `SUPABASE_KEY`) under **Settings → Secrets and variables → Actions**.
 - The workflow in `.github/workflows/update_scores.yml` will run automatically every weekday at 12:00 UTC.
 - You can also trigger it manually from the **Actions** tab.
 
