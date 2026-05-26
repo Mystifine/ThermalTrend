@@ -71,7 +71,7 @@ export default function ModernDashboard() {
             Live Market Metrics
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500 mb-2">
-            Sector Heatmap
+            Thermal Trend
           </h1>
           <p className="text-gray-400 text-sm md:text-base max-w-xl">
             Theme Heat Score (0‑100) = 40% average 3‑month return + 25% breadth (% of stocks with positive 1‑month returns) + 20% near‑highs (% within 20% of 52‑week high) + 15% price consolidation (low recent volatility).
