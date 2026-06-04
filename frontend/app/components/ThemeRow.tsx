@@ -4,8 +4,8 @@ import {TrendingUp, TrendingDown, Clock} from "lucide-react";
 
 type ThemeItem = any;
 
-export default function ThemeRow({item, index, mode}: {item: ThemeItem; index: number; mode: "breakouts" | "pullbacks"}) {
-  const score = mode === "breakouts" ? item.breakout_score : item.pullback_score;
+export default function ThemeRow({item, index, mode}: {item: ThemeItem; index: number; mode: "hot_themes" | "breakouts" | "pullbacks"}) {
+  const score = mode === "hot_themes" ? item.hot_theme_score : mode === "breakouts" ? item.breakout_score : item.pullback_score;
   const isTop = index === 0;
   const showSymbols = 5;
   const remainingSymbols = item.stocks_analyzed.length - showSymbols;

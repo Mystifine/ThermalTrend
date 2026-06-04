@@ -24,6 +24,7 @@ if __name__ == "__main__":
 
     # Console output
     print(f"\n{themeData['theme']}")
+    print(f"  Hot Theme Score: {themeData['hot_theme_score']:.2f}")
     print(f"  Pullback Score: {themeData['pullback_score']:.2f}")
     print(f"  Breakout Score: {themeData['breakout_score']:.2f}")
     print(f"  Stocks Analyzed: {len(themeData['stocks_analyzed'])}")

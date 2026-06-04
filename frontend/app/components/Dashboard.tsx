@@ -16,7 +16,7 @@ interface ThemeHeat {
   created_at: Date;
 }
 
-export default function Dashboard({mode}: {mode: "breakouts" | "pullbacks"}) {
+export default function Dashboard({mode}: {mode: "hot_themes" | "breakouts" | "pullbacks"}) {
   const [themes, setThemes] = useState<ThemeHeat[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +24,7 @@ export default function Dashboard({mode}: {mode: "breakouts" | "pullbacks"}) {
   useEffect(() => {
     async function fetchThemes() {
       try {
-        const sortColumn = mode === "breakouts" ? "breakout_score" : "pullback_score";
+        const sortColumn = mode === "hot_themes" ? "hot_theme_score" : mode === "breakouts" ? "breakout_score" : "pullback_score";
 
         const { data, error } = await supabase
           .from("industry_heat")
@@ -43,23 +43,6 @@ export default function Dashboard({mode}: {mode: "breakouts" | "pullbacks"}) {
 
     fetchThemes();
   }, []);
-
-  const isMarketTheme = (theme : string) => {
-    return theme == "Broad Market";
-  }
-
-  const getHeatBadge = (score: number) => {
-    if (score >= 85) return 'bg-orange-500/10 text-orange-400 border-orange-500/30 shadow-[0_0_10px_rgba(249,115,22,0.2)]';
-    if (score >= 70) return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
-    if (score >= 40) return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30';
-    return 'bg-red-500/10 text-red-400 border-red-500/30';
-  };
-
-  const getBarColor = (val: number) => {
-    if (val >= 70) return 'bg-emerald-500';
-    if (val >= 40) return 'bg-yellow-500';
-    return 'bg-red-500';
-  };
 
   if (loading) {
     return (

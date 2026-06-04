@@ -18,21 +18,24 @@ export default function HomePage() {
         </h1>
 
         <p className="text-gray-400 text-sm md:text-base max-w-md leading-relaxed mb-8">
-          Hello. This is a personal project of mine to find the hottest themes setting up in the market, using a custom-built heat score algorithm. The data is updated daily, and the top themes are ranked based on their current momentum and recent performance. Check out the breakouts and pullbacks pages to find out which themes are heating up or cooling down!
+          This is not financial advice. This is simply to view hot themes that are moving and setups using a custom built scoring algorithm.
         </p>
 
         {/* Navigation Buttons */}
         <div className="flex gap-4">
           <Link
+            href="/hot_themes"
+            className="px-5 py-2 rounded-lg border border-red-500/30 text-red-400 hover:bg-red-500/10 transition-colors"          >
+            View Hot Themes
+          </Link>
+          <Link
             href="/breakouts"
-            className="px-5 py-2 rounded-lg border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 transition-colors"
-          >
+            className="px-5 py-2 rounded-lg border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 transition-colors"          >
             View Breakouts
           </Link>
           <Link
             href="/pullbacks"
-            className="px-5 py-2 rounded-lg border border-orange-500/30 text-orange-400 hover:bg-orange-500/10 transition-colors"
-          >
+            className="px-5 py-2 rounded-lg border border-blue-500/30 text-blue-400 hover:bg-blue-500/10 transition-colors"          >
             View Pullbacks
           </Link>
         </div>
