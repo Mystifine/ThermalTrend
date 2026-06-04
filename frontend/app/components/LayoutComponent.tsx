@@ -7,7 +7,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
   const pathname = usePathname();
 
   const tabs = [
-    { name: "Hot Themes", href: "/hot_themes "},
+    { name: "Hot Themes", href: "/hot_themes"},
     { name: "Breakouts", href: "/breakouts" },
     { name: "Pullbacks", href: "/pullbacks" },
   ];
