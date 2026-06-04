@@ -1,0 +1,59 @@
+{
+  "Broad Market": ["VTI", "SPY", "QQQ", "IWM", "VEA", "VWO"],
+
+  "AI": ["NVDA", "MSFT", "GOOGL", "META", "AMD", "AVGO", "ORCL", "CRM", "NOW", "ANET"],
+
+  "Robotics": ["ROBO", "ROK", "HON", "TER", "FANUY", "DHR", "ABBNY", "KLAC", "STM", "ISRG"],
+
+  "Semiconductors": ["NVDA", "AMD", "TSM", "ASML", "AVGO", "QCOM", "MU", "ARM", "AMAT", "LRCX"],
+
+  "Cybersecurity": ["PANW", "CRWD", "FTNT", "ZS", "OKTA", "CHKP", "TENB", "NET", "S", "AKAM"],
+
+  "Solar": ["ENPH", "SEDG", "FSLR", "RUN", "CSIQ", "JKS", "BE", "TAN", "NXT", "ARRY"],
+
+  "Clean Energy": ["NEE", "CCJ", "ENPH", "FSLR", "BE", "QCLN", "ICLN", "PBW", "GEV", "VRT"],
+
+  "EV": ["TSLA", "BYDDF", "LI", "XPEV", "RIVN", "GM", "F", "HMC", "VWAGY", "MBLY"],
+
+  "Batteries": ["ALB", "SQM", "LAC", "LIT", "BYDDF", "ESS", "BATT", "QS", "QS", "ENVX"],
+
+  "Biotech": ["REGN", "BIIB", "GILD", "AMGN", "VRTX", "BNTX", "MRNA", "ILMN", "XBI", "IBB"],
+
+  "Genomics": ["CRSP", "NTLA", "EDIT", "BEAM", "ILMN", "PACB", "ARKG", "GNOM", "RXRX", "DNA"],
+
+  "Healthcare Innovation": ["ISRG", "ABT", "MDT", "ZBH", "BDX", "VRTX", "ILMN", "HTEC", "DXCM", "TMDX"],
+
+  "Defense": ["LMT", "NOC", "RTX", "GD", "LHX", "HII", "KTOS", "PPA", "ITA", "PLTR"],
+
+  "Aerospace": ["BA", "LMT", "RTX", "NOC", "HEI", "LHX", "TDG", "RKLB", "ARKX", "SPCE"],
+
+  "Uranium": ["CCJ", "NXE", "UEC", "DNN", "URA", "URNM", "UROY", "PALAF", "LEU", "SMR"],
+
+  "Nuclear": ["CCJ", "NXE", "URA", "URNM", "LEU", "SMR", "OKLO", "BWXT", "UEC", "DNN"],
+
+  "Infrastructure": ["CAT", "DE", "VMC", "PAVE", "NFRA", "CSX", "UNP", "KBR", "FLR", "GEV"],
+
+  "Construction": ["CAT", "DE", "PKB", "FLR", "VMC", "DHI", "LEN", "PHM", "MAS", "JCI"],
+
+  "Cloud": ["MSFT", "AMZN", "GOOGL", "CRM", "NOW", "SNOW", "MDB", "NET", "CLOU", "SKYY"],
+
+  "Software": ["MSFT", "ORCL", "ADBE", "CRM", "NOW", "INTU", "SNOW", "SAP", "VGT", "DDOG"],
+
+  "Internet": ["AMZN", "GOOGL", "META", "BABA", "SHOP", "PDD", "SE", "PINS", "RDDT", "FDN"],
+
+  "Retail": ["WMT", "TGT", "COST", "HD", "LOW", "ROST", "TJX", "XRT", "IBUY", "AMZN"],
+
+  "Ecommerce": ["AMZN", "BABA", "SHOP", "ETSY", "SE", "PDD", "JD", "MELI", "ONLN", "EBAY"],
+
+  "Travel": ["DAL", "UAL", "LUV", "EXPE", "BKNG", "MAR", "HLT", "CCL", "AWAY", "JETS"],
+
+  "Fintech": ["PYPL", "MA", "V", "XYZ", "SOFI", "UPST", "AFRM", "FIS", "NU", "AXP"],
+
+  "Blockchain": ["COIN", "MSTR", "RIOT", "MARA", "BLOK", "BLCN", "HUT", "CIFR", "IREN", "BTDR"],
+
+  "Gold Miners": ["NEM", "GOLD", "GDX", "GDXJ", "AEM", "KGC", "FNV", "RGLD", "WPM", "NUGT"],
+
+  "Copper": ["FCX", "COPX", "SCCO", "TECK", "BHP", "RIO", "VALE", "CSCCF", "CDE", "HBM"],
+
+  "Lithium": ["ALB", "SQM", "LAC", "LIT", "LTM", "GWH", "BYDDF", "TSLA", "BATT", "LTM"]
+}

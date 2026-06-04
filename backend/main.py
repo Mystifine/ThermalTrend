@@ -1,11 +1,31 @@
+import json
+
 from fastapi import FastAPI;
 import pandas as pd;
-import ThemeHeatScoreCalculator
+from ThemeHeatScoreCalculator import ThemeHeatScoreCalculator;
+from DatabaseManager import pushToDB;
 
 app = FastAPI();
 
-#@app.get("/api/themes")
-#async def get_themes():
+if __name__ == "__main__":
+  with open("Themes.json", "r") as f:
+    THEMES = json.load(f)
 
+  heatCalc = ThemeHeatScoreCalculator(THEMES);
+  results = heatCalc.getRankings();
 
-  #return data;
+  print("\n" + "="*60)
+  print("🔥 HOT THEMES – Pullbacks & Breakouts 🔥")
+  print("="*60)
+
+  for themeData in results:
+    # Push to DB
+    pushToDB(themeData)
+
+    # Console output
+    print(f"\n{themeData['theme']}")
+    print(f"  Pullback Score: {themeData['pullback_score']:.2f}")
+    print(f"  Breakout Score: {themeData['breakout_score']:.2f}")
+    print(f"  Stocks Analyzed: {len(themeData['stocks_analyzed'])}")
+
+  print("\n" + "="*60)
