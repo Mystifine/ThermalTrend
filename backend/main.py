@@ -4,11 +4,12 @@ from fastapi import FastAPI;
 import pandas as pd;
 from ThemeHeatScoreCalculator import ThemeHeatScoreCalculator;
 from DatabaseManager import pushToDB;
+from pathlib import Path;
 
 app = FastAPI();
 
 if __name__ == "__main__":
-  with open("Themes.json", "r") as f:
+  with open(Path(__file__).parent / "Themes.json", "r") as f:
     THEMES = json.load(f)
 
   heatCalc = ThemeHeatScoreCalculator(THEMES);

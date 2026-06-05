@@ -1,4 +1,4 @@
-# 🌡️ ThermaTrend – Theme Heat Score Dashboard
+# 🔥 Thermal Trend – Theme Momentum Dashboard
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue?logo=python)](https://python.org)
@@ -6,163 +6,322 @@
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://vercel.com)
 [![GitHub Actions](https://img.shields.io/badge/scheduled%20by-GitHub%20Actions-2088FF?logo=githubactions)](https://github.com/features/actions)
 
-**ThermaTrend** scans 27+ thematic stock baskets in real time and distills thousands of data points into a single **Theme Heat Score** (0–100).  
-The dashboard reveals which sectors are gaining institutional momentum, so you can spot rotations before they become obvious.
+**Thermal Trend** tracks 27+ thematic stock baskets and ranks them using proprietary momentum and technical-structure scoring models.
+
+Rather than simply measuring performance, Thermal Trend identifies:
+
+* Themes experiencing accelerating momentum
+* Themes building strong breakout setups
+* Themes offering attractive pullback opportunities
+
+The result is a market-wide view of where institutional capital is rotating and which sectors are setting up for their next move.
 
 ---
 
-## 🔥 What’s a Heat Score?
+## 📈 Core Metrics
 
-Each theme’s score is a weighted blend of four equally important signals:
+Every theme is evaluated using three primary scores.
+
+### 🔥 Hot Theme Score
+
+Measures overall momentum and acceleration within a theme.
+
+The score combines:
+
+* 1-Month Median Return
+* 3-Month Median Return
+* 6-Month Median Return
+* Momentum Acceleration (1M vs 3M performance)
 
 ```
-Heat Score = 0.40 × (avg 3‑month return)
-           + 0.25 × (% of stocks with positive 1‑month return)   ← breadth
-           + 0.20 × (% of stocks within 20% of their 52‑week high) ← strength
-           + 0.15 × (consolidation score 0–100)                   ← low recent volatility
+Hot Theme Score =
+  30% Acceleration
++ 30% 1-Month Return
++ 20% 3-Month Return
++ 20% 6-Month Return (dampened)
 ```
 
-All values are normalised so a higher number = more “heat”. Themes are ranked from hottest to coldest.
+Themes with rising momentum tend to rank higher than themes that have already peaked.
+
+---
+
+### 🚀 Breakout Score
+
+Identifies themes whose constituent stocks are forming high-quality breakout setups.
+
+Each stock is evaluated based on:
+
+* Prior price run-up
+* Distance from recent highs
+* Range contraction
+* Volume dry-up
+* Higher-low structure
+
+```
+Breakout Score =
+  30% Prior Run-Up
++ 25% Near Highs
++ 20% Volume Contraction
++ 15% Range Contraction
++ 10% Higher Lows
+```
+
+Higher scores indicate stocks consolidating beneath potential breakout levels.
+
+---
+
+### 📉 Pullback Score
+
+Identifies strong stocks that are pulling back into support.
+
+Each stock is evaluated based on:
+
+* Prior trend strength
+* Pullback depth
+* EMA alignment
+* Volume contraction
+
+```
+Pullback Score =
+  45% Prior Run-Up
++ 20% Pullback Depth
++ 20% EMA Cluster
++ 15% Volume Dry-Up
+```
+
+Higher scores suggest healthier pullbacks within established uptrends.
 
 ---
 
 ## ✨ Features
 
-- **27+ thematic baskets** – Semiconductors, AI, Biotech, Clean Energy, Crypto, etc.
-- **Clean, modern UI** – Color‑coded heat badges, progress bars, and per‑symbol tags.
-- **Last updated per theme** – See exactly when each row was refreshed.
-- **Fully automated pipeline** – Python backend recalculates scores daily via GitHub Actions.
-- **Real Supabase data** – Your dashboard pulls live scores from a PostgreSQL database.
+* **27+ thematic baskets** covering AI, Semiconductors, Robotics, Nuclear Energy, Defense, Biotech, Crypto, and more.
+* **Hot Theme Rankings** showing which sectors are gaining momentum.
+* **Breakout Rankings** highlighting themes with strong technical setups.
+* **Pullback Rankings** identifying potential buy-the-dip opportunities.
+* **Automated daily analysis** using GitHub Actions.
+* **Live Supabase database** powering real-time dashboard updates.
+* **Modern responsive UI** built with Next.js and Tailwind CSS.
 
 ---
 
 ## 🧱 Tech Stack
 
-| Layer         | Technology                                      |
-|---------------|-------------------------------------------------|
-| Frontend      | Next.js 15, React, Tailwind CSS, Lucide icons   |
-| Backend       | Python (yfinance, pandas, numpy)                |
-| Database      | Supabase (PostgreSQL)                           |
-| Orchestration | GitHub Actions (cron schedule)                  |
-| Hosting       | Vercel (frontend), GitHub Actions (backend)     |
+| Layer      | Technology                      |
+| ---------- | ------------------------------- |
+| Frontend   | Next.js 15, React, Tailwind CSS |
+| Backend    | Python, Pandas, NumPy, yFinance |
+| Database   | Supabase (PostgreSQL)           |
+| Scheduling | GitHub Actions                  |
+| Hosting    | Vercel                          |
+
+---
+
+## 🧠 How It Works
+
+For every stock in a theme:
+
+1. Download historical price and volume data from Yahoo Finance.
+2. Calculate:
+
+   * 1-Month Returns
+   * 3-Month Returns
+   * 6-Month Returns
+   * Breakout Structure Score
+   * Pullback Structure Score
+3. Aggregate results at the theme level.
+4. Store rankings in Supabase.
+5. Display updated rankings on the dashboard.
+
+The system uses median returns instead of averages to reduce the impact of outliers.
 
 ---
 
 ## 📁 Project Structure
 
-```
-thermatrend/
-├── frontend/                # Next.js application
+```text
+thermal-trend/
+├── frontend/
 │   ├── app/
-│   │   ├── page.tsx         # Dashboard component
-│   │   └── layout.tsx
+│   ├── components/
 │   ├── lib/
-│   │   └── supabaseClient.ts
 │   └── ...
-├── backend/                 # Python heat‑score engine
-│   ├── CalculateHeat.py   # main script
-│   └── requirements.txt
+│
+├── backend/
+│   ├── main.py
+│   ├── Themes.json
+│   ├── requirements.txt
+│   └── ...
+│
 └── .github/
     └── workflows/
-        └── update_scores.yml  # daily cron job
+        └── update_scores.yml
 ```
 
 ---
 
-## ⚙️ Setup (Local Development)
+## ⚙️ Local Development
 
-### 1. Clone the repo
+### Clone Repository
+
 ```bash
-git clone https://github.com/mystifine/thermatrend.git
-cd thermatrend
+git clone https://github.com/mystifine/thermal-trend.git
+cd thermal-trend
 ```
 
-### 2. Frontend
+### Frontend
+
 ```bash
 cd frontend
+
 npm install
-cp .env.local.example .env.local   # add your Supabase URL & anon key
+
+cp .env.local.example .env.local
+
 npm run dev
 ```
-The dashboard will be available at `http://localhost:3000`.
 
-### 3. Backend (optional local run)
+Open:
+
+```text
+http://localhost:3000
+```
+
+---
+
+### Backend
+
 ```bash
 cd backend
+
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+
+source venv/bin/activate
+# Windows:
+# venv\Scripts\activate
+
 pip install -r requirements.txt
 ```
-Create a `.env` file in `backend/` with:
+
+Create:
+
+```text
+backend/.env
 ```
+
+```env
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_KEY=your-service-role-key
 ```
-Then run:
+
+Run:
+
 ```bash
-python CalculateHeat.py
+python main.py
 ```
-This will recalculate all themes and push the results to your Supabase table.
 
 ---
 
-## 🗄️ Database Setup (Supabase)
+## 🗄️ Database Schema
 
-1. Create a new project on [supabase.com](https://supabase.com).
-2. In the SQL editor, create the `industry_heat` table:
-   ```sql
-   create table industry_heat (
-     id bigint primary key generated always as identity,
-     theme text not null unique,
-     heat_score numeric,
-     return_3_months numeric,
-     "breadth_%" numeric,
-     "near_highs_%" numeric,
-     consolidation_score numeric,
-     stocks_analyzed text[],
-     created_at timestamptz default now(),
-     last_updated timestamptz
-   );
-   ```
-3. Enable Row‑Level Security and add a public read policy:
-   ```sql
-   alter table industry_heat enable row level security;
-   create policy "Public read access"
-     on industry_heat for select
-     to anon
-     using (true);
-   ```
-4. Copy the **anon public key** and **project URL** into your frontend `.env.local`.
+```sql
+create table industry_heat (
+  id uuid primary key,
+  theme text not null unique,
+
+  hot_theme_score numeric,
+  breakout_score numeric,
+  pullback_score numeric,
+
+  return_1_months numeric,
+  return_3_months numeric,
+  return_6_months numeric,
+
+  stocks_analyzed text[],
+
+  created_at timestamptz,
+  last_updated timestamptz
+);
+```
 
 ---
 
 ## 🚀 Deployment
 
 ### Frontend (Vercel)
-- Push the repository to GitHub.
-- Import the project on [Vercel](https://vercel.com).
-- Set the root directory to `frontend`.
-- Add environment variables `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 
-### Backend (GitHub Actions)
-- Add repository secrets (`SUPABASE_URL`, `SUPABASE_KEY`) under **Settings → Secrets and variables → Actions**.
-- The workflow in `.github/workflows/update_scores.yml` will run automatically every weekday at 12:00 UTC.
-- You can also trigger it manually from the **Actions** tab.
+1. Push repository to GitHub.
+2. Import project into Vercel.
+3. Set root directory to:
+
+```text
+frontend
+```
+
+4. Add environment variables:
+
+```text
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+```
 
 ---
 
-## 📊 Usage
+### Backend (GitHub Actions)
 
-- Open the dashboard to see the current heat ranking.
-- Hover over a theme to see the full list of component stocks.
-- The “Last Updated” column shows when each theme was last analysed.
-- Data refreshes automatically every trading day (Mon–Fri).
+Add repository secrets:
+
+```text
+SUPABASE_URL
+SUPABASE_KEY
+```
+
+The workflow automatically:
+
+* Downloads market data
+* Calculates all theme metrics
+* Updates Supabase
+* Refreshes dashboard data
+
+You can also run the workflow manually from the GitHub Actions tab.
+
+---
+
+## 📊 Example Themes
+
+Current theme coverage includes:
+
+* AI
+* Semiconductors
+* Robotics
+* Cybersecurity
+* Cloud Computing
+* Defense
+* Nuclear Energy
+* Uranium
+* Biotech
+* FinTech
+* Crypto Infrastructure
+* Autonomous Vehicles
+* Renewable Energy
+* Industrial Automation
+
+…and many more.
 
 ---
 
 ## 🤝 Contributing
 
-Pull requests are welcome! If you’d like to add a new theme or improve the heat formula, please open an issue first to discuss your idea.
+Contributions are welcome.
+
+If you'd like to:
+
+* Add new themes
+* Improve scoring models
+* Enhance the dashboard
+* Improve performance
+
+please open an issue before submitting major changes.
 
 ---
 
@@ -172,4 +331,8 @@ MIT © Mystifine
 
 ---
 
-Data powered by Yahoo Finance (via `yfinance`) – use responsibly.
+### Data Source
+
+Market data is provided by Yahoo Finance through the `yfinance` library.
+
+This project is intended for educational and research purposes only and should not be considered investment advice.
