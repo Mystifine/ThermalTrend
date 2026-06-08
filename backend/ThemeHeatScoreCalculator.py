@@ -48,23 +48,20 @@ class ThemeHeatScoreCalculator:
     ema50 = close.ewm(span=50).mean().iloc[-1]
 
     # --- Breakout Structure ---
-    prior_run_score = max(0, min(100, return1 * 2))
-
-    # 2. Distance from highs (must be near breakout zone)
-    recent_high = close.rolling(20).max().iloc[-1]
-
-    distance_from_high = (
-      (recent_high - current) / recent_high
-    ) * 100
-
-    near_high_score = max(0, 100 - distance_from_high * 20)
+    prior_run_score = max(0, min(100, return3 * 1.2))
 
     # 3. Range contraction (tight consolidation)
     high20 = close.rolling(20).max().iloc[-1]
     low20 = close.rolling(20).min().iloc[-1]
 
+    distance_from_high = (
+      (high20 - current) / high20
+    ) * 100
+
+    near_high_score = max(0, 100 - distance_from_high * 8)
+
     range_pct = ((high20 - low20) / low20) * 100
-    range_score = max(0, 100 - range_pct * 6)
+    range_score = max(0, 100 - range_pct * 3)
 
     # 4. Volume contraction (key missing piece you had broken)
     vol10 = volume.tail(10).mean()
@@ -76,7 +73,7 @@ class ThemeHeatScoreCalculator:
     # 5. Higher low structure (trend confirmation)
     sma20 = close.rolling(20).mean().iloc[-1]
 
-    higher_low_score = 100 if current > sma20 else 50
+    higher_low_score = 100 if current > sma20 else 0
 
     """
     Breakout score is calculated using the following weights:
@@ -96,7 +93,7 @@ class ThemeHeatScoreCalculator:
     breakout_score = max(0, min(100, breakout_score))
 
     # pullback structure
-    run_up_score = max(0, min(100, return1 + 50))
+    run_up_score = max(0, min(100, return3 * 1.5))
 
     dist_ema20 = (current - ema20) / ema20 * 100
 
@@ -106,9 +103,9 @@ class ThemeHeatScoreCalculator:
     )
 
     ema_cluster_score = 100 - (
-      (abs(current - ema10) / current) * 100 +
-      (abs(current - ema20) / current) * 100 +
-      (abs(current - ema50) / current) * 100
+      (abs(current - ema10) / current) * 100 * 0.2 +
+      (abs(current - ema20) / current) * 100 * 0.5 +
+      (abs(current - ema50) / current) * 100 * 0.3
     ) * 10
     ema_cluster_score = max(0, min(100, ema_cluster_score))
 
@@ -117,7 +114,7 @@ class ThemeHeatScoreCalculator:
 
     volume_ratio = vol10 / vol50
 
-    pulback_volume_score = max(
+    pullback_volume_score = max(
       0,
       min(100, (1.2 - volume_ratio) * 250)
     )
@@ -133,7 +130,7 @@ class ThemeHeatScoreCalculator:
       0.45 * run_up_score +
       0.20 * pullback_depth_score +
       0.20 * ema_cluster_score +
-      0.15 * pulback_volume_score
+      0.15 * pullback_volume_score
     )
 
     pullback_score = max(0, min(100, pullback_score))
@@ -160,10 +157,11 @@ class ThemeHeatScoreCalculator:
     if not stockMetrics:
       return None
 
-    n = len(stockMetrics)
+    scores_pb = [m["pullback_score"] for m in stockMetrics]
+    scores_bo = [m["breakout_score"] for m in stockMetrics]
 
-    pullback_score = np.mean([m["pullback_score"] for m in stockMetrics])
-    breakout_score = np.mean([m["breakout_score"] for m in stockMetrics])
+    pullback_score = np.mean(scores_pb) * (0.5 + 0.5 * sum(1 for s in scores_pb if s >= 70) / len(scores_pb))
+    breakout_score = np.mean(scores_bo) * (0.5 + 0.5 * sum(1 for s in scores_bo if s >= 70) / len(scores_bo))
 
     # avg returns (display only)
     avg_return1 = float(np.median([m["return1"] for m in stockMetrics]))
@@ -177,12 +175,12 @@ class ThemeHeatScoreCalculator:
     20% on 3 month returns
     20% on 6 month returns but dampened
     """
-    hot_theme_score = (
-      0.3 * (avg_return1 - avg_return3) * 0.5 + 
-      0.3 * avg_return1 +
-      0.2 * avg_return3 +
+    hot_theme_score = max(0,(
+      0.3 * np.tanh(max(0,avg_return1 - avg_return3) / 10) * 100 + 
+      0.3 * np.tanh(avg_return1 / 15) * 100 +
+      0.2 * np.tanh(avg_return3 / 30) * 100 +
       0.2 * np.tanh(avg_return6 / 50) * 100
-    )
+    ))
 
     return {
       "theme": themeName,
